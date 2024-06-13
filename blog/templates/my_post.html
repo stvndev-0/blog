@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h3>My Post</h3>
+        <a href="{% url 'create_post' %}" class="btn btn-secondary">Create Post</a>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for post in my_post %}
+            <div class="col mb-5">
+                <div class="card" style="width: 18rem;">
+                    <img src="{% static 'assest/baki_hanma.jpg' %}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{post.title}}</h5>
+                        <p class="card-text">{{post.subtitle}}</p>
+                        <a href="{% url  'post' post.id %}" class="btn btn-primary">View</a>
+                        <a href="" class="btn btn-success">Update</a>
+                        <a href="" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

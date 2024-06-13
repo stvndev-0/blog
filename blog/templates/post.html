@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% for body in post %}
+    {{body.title}} <br>
+    {{body.date_create}} <br>
+    {{body.subtitle}} <br>
+    {{body.body}} <br>
+    Create by {{body.user.username}} <br>
+    <br>
+    <br>
+{% endfor %}
+<h6>Comments</h6>
+
+{% for comment in comments %}
+    {{comment.text}} - {{comment.user.username}} - {{comment.date_create}} <br><br>
+{% endfor %}
+
+<a href="{% url 'home' %}">Volver</a>
+
+{% endblock %}    
