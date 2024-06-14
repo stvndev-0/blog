@@ -6,17 +6,18 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255)
     body = models.TextField(max_length=15000)
-    date_create = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     
     def __str__(self):
-        return f'{self.title} by {self.user.username}'
+        return f'{self.title} by {self.author.username}'
 
 class Comment(models.Model):
     text = models.CharField(max_length=255)
-    date_create = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
-        return f'Comment post: {self.post.title} by {self.user.username}'
+        return f'Comment on {self.post.title} by {self.author.username}'

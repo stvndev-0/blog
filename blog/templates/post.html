@@ -1,22 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-{% for body in post %}
-    {{body.title}} <br>
-    {{body.date_create}} <br>
-    {{body.subtitle}} <br>
-    {{body.body}} <br>
-    Create by {{body.user.username}} <br>
+<br><br>
+<div class="container">
+    <h1>{{post.title}}</h1> <br>
+    {{post.date_create}} <br>
+    <h3>{{post.subtitle}}</h3> <br>
+    <p>{{post.body}}</p> <br>
+    <h6>Create by {{post.author.username}}</h6> <br>
     <br>
     <br>
-{% endfor %}
-<h6>Comments</h6>
 
-{% for comment in comments %}
-    {{comment.text}} - {{comment.user.username}} - {{comment.date_create}} <br><br>
-{% endfor %}
+    <form action="{% url 'comment_post' post.id %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <button type="button" class="btn btn-outline-secondary">Calcelar</button>
+        <button type="submit" class="btn btn-primary">Comment</button>
+    </form>
+    <br>
+    <h6>Comments</h6>
 
-<a href="{% url 'home' %}">Volver</a>
+    {% for comment in comments %}
+    {{comment.text}} - {{comment.author.username}} - {{comment.created_at}} <br><br>
+    {% endfor %}
+
+    <a href="{% url 'home' %}">Volver</a>
+</div>
 
 {% endblock %}    

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Post
+from .models import Post, Comment
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -30,7 +30,18 @@ class SignUpForm(UserCreationForm):
 		self.fields['password2'].label = ''
 		self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
 
-class PostCreate(forms.ModelForm):
+class PostForm(forms.ModelForm):
+	title = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Title'}))
+	subtitle = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Subtitle'}))
+	body = forms.CharField(label="", widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'Body'}))
+
 	class Meta:
 		model = Post
-		fields = ['title', 'subtitle', 'body']
+		fields = ('title', 'subtitle', 'body')
+
+class CommentForm(forms.ModelForm):
+	text = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Write comment'}))
+
+	class Meta:
+		model = Comment
+		fields = ('text',)
