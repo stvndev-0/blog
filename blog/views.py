@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comment
+from .models import Profile, Post, Comment
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
-from .forms import SignUpForm, PostForm, CommentForm
+from .forms import SignUpForm, ProfileUpdateForm, PostForm, CommentForm
 from django.contrib import messages
 
 # Create your views here.
@@ -89,6 +89,12 @@ def comment_post(request, post_id):
         messages.error(request, 'You must log in to access that web page')
         
     return redirect('post', post_id)
+
+
+def profile(request):
+    current_user = User.objects.get(id=request.user.id)
+    image_user = Profile.objects.get(user=request.user)
+    return render(request, 'profile.html', {'user': current_user, 'image': image_user})
 
 def search(request):
     pass
