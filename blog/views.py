@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Profile, Post, Comment
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import SignUpForm, ProfileUpdateForm, PostForm, CommentForm
+from .forms import SignUpForm, ProfileUpdateForm, ImageForm, PostForm, CommentForm
 from django.contrib import messages
 
 # Create your views here.
@@ -96,6 +97,26 @@ def profile(request):
     image_user = Profile.objects.get(user=request.user)
     return render(request, 'profile.html', {'user': current_user, 'image': image_user})
 
+@login_required
+def update_img_profile(request):
+    profile = request.user.profile
+    image_form = ImageForm(request.POST, request.FILES, instance=profile)
+    if request.method == 'POST':
+        if image_form.is_valid():
+            image_form.save()
+            return redirect('profile')
+    return render(request, 'CRUD/update_img_profile.html', {'profile': profile, 'image_form': image_form})
+
+@login_required
+def update_info_profile(request):
+    profile_form = ProfileUpdateForm(request.POST or None, instance=request.user)
+    if request.method == 'POST':
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profile')
+    return render(request, 'CRUD/update_info_profile.html', {'profile_form': profile_form})
+    
+    
 def search(request):
     pass
 

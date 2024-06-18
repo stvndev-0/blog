@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
-
 <div class="container">
+
+    
+
+    <a href="{% url 'update_img_profile' %}">Actualizar foto</a>
+
     <form action="" method="post">
         {% csrf_token %}
-        {{form.as_p}}
+        {{profile_form.as_p}}
         <button type="submit" class="btn btn-success">Update Post</button>
     </form>
 </div>

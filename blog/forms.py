@@ -30,10 +30,26 @@ class SignUpForm(UserCreationForm):
 		self.fields['password2'].label = ''
 		self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
 
-class ProfileUpdateForm(forms.ModelForm):
-	class Meta:
-		model = Profile
-		fields = ('image',)
+class ProfileUpdateForm(UserChangeForm):
+    password = None
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+        }
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('image',)
+        widgets = {
+			'image': forms.ClearableFileInput(attrs={'class': 'form-control'})
+		}
 
 
 class PostForm(forms.ModelForm):

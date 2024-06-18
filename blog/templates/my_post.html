@@ -16,7 +16,7 @@
                         <h5 class="card-title">{{post.title}}</h5>
                         <p class="card-text">{{post.subtitle}}</p>
                         <a href="{% url  'post' post.id %}" class="btn btn-primary">View</a>
-                        <a href="{% url 'update_post' post.id %}" class="btn btn-success">Edit</a>
+                        <a href="{% url 'edit_post' post.id %}" class="btn btn-success">Edit</a>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">delete</button>
 
                         {% include 'CRUD/delete_post.html' %}
