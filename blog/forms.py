@@ -51,15 +51,20 @@ class ImageForm(forms.ModelForm):
 			'image': forms.ClearableFileInput(attrs={'class': 'form-control'})
 		}
 
-
 class PostForm(forms.ModelForm):
-	title = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Title'}))
-	subtitle = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Subtitle'}))
-	body = forms.CharField(label="", widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'Body'}))
-
 	class Meta:
 		model = Post
-		fields = ('title', 'subtitle', 'body')
+		fields = ('title', 'subtitle', 'cover', 'body')
+		widgets = {
+			'title': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Title'}),
+			'subtitle': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Subtitle'}),
+			'cover': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+			'body': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Body'})
+		}
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.fields['cover'].widget.attrs.update({'accept': '.jpg, .jpeg, .png'})  
 
 class CommentForm(forms.ModelForm):
 	text = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Write comment'}))

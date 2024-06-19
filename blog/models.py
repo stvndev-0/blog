@@ -22,6 +22,7 @@ post_save.connect(create_profile, sender=User)
 class Post(models.Model):
     title = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255)
+    cover = models.ImageField(upload_to='cover/', null=True)
     body = models.TextField(max_length=15000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

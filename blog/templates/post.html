@@ -4,10 +4,14 @@
 <br><br>
 <div class="container">
     <h1>{{post.title}}</h1> <br>
-    {{post.date_create}} <br>
-    <h3>{{post.subtitle}}</h3> <br>
+    <p>{{post.subtitle}}</p>
+    <br>
+    <img src="{{post.cover.url}}" alt="" width="200px">
+    <br><br>
+    {{post.created_at}} 
+    <br>
+    <p>Create by {{post.author.username}}</p> <br>
     <p>{{post.body}}</p> <br>
-    <h6>Create by {{post.author.username}}</h6> <br>
     <br>
     <br>
 

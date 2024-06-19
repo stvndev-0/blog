@@ -26,95 +26,82 @@ def my_post(request):
         return redirect("home")
 
 # Faltan validaciones
+@login_required
 def create_post(request):
-    if request.user.is_authenticated:
-        form = PostForm(request.POST)
-        if request.method == 'POST':
-            if form.is_valid():
-                post = form.save(commit=False)
-                post.author = request.user
-                post.save()
-                messages.success(request, 'Your post has been created')
-                return redirect('my_post')
-        else:
-            return render(request, 'CRUD/create_post.html', {'form': form})
-    else:
-        messages.error(request, 'You must log in to access that web page')
-        return redirect('home')
-
-
-def edit_post(request, post_id):
-    if request.user.is_authenticated:
-        post = get_object_or_404(Post, id=post_id, author=request.user)
-        if request.method == 'POST':
-            form = PostForm(request.POST or None, instance=post)
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Your post has been update succesfuly")
-                return redirect('post', post_id=post.id)
-        else:
-            form = PostForm(instance=post)
-            return render(request, 'CRUD/edit_post.html', {'form': form})
-    else:
-        messages.error(request, 'You must log in to access that web page')
-        return redirect('home')
-
-
-def delete_post(request, post_id):
-    if request.user.is_authenticated:
-        post = get_object_or_404(Post, id=post_id, author=request.user)
-        if request.method == 'POST':
-            post.delete()
-            messages.error(request, 'You have delete post')
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, 'Your post has been created')
             return redirect('my_post')
-        else:
-            messages.error(request, 'You must log in to access that web page')
-            return render(request, 'CRUD/delete_post.html', {'post': post})
     else:
-        messages.error(request, 'You must log in to access that web page')
-        return redirect('home')
-
-
-def comment_post(request, post_id):
-    if request.user.is_authenticated:
-        post = get_object_or_404(Post, id=post_id)
-        if request.POST:
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.author = request.user
-                comment.post = post
-                comment.save()
-                return redirect('post', post_id)
-    else:
-        messages.error(request, 'You must log in to access that web page')
+        form = PostForm()
         
-    return redirect('post', post_id)
+    return render(request, 'CRUD/create_post.html', {'form': form})
 
+@login_required
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id, author=request.user)
+    if request.method == 'POST':
+        form = PostForm(request.POST or None, request.FILES or None, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your post has been update succesfuly")
+            return redirect('post', post_id=post.id)
+        else:
+            messages.error(request, "error")
+            return redirect('post', post_id=post.id)
+    else:
+        form = PostForm(instance=post)
+        return render(request, 'CRUD/edit_post.html', {'form': form})
 
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id, author=request.user)
+    if request.method == 'POST':
+        post.delete()
+        messages.error(request, 'You have delete post')
+        return redirect('my_post')
+    else:
+        messages.error(request, 'You must log in to access that web page')
+        return render(request, 'CRUD/delete_post.html', {'post': post})
+
+@login_required
+def comment_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.POST:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+            return redirect('post', post_id)
+
+@login_required
 def profile(request):
     current_user = User.objects.get(id=request.user.id)
     image_user = Profile.objects.get(user=request.user)
     return render(request, 'profile.html', {'user': current_user, 'image': image_user})
 
+
+
 @login_required
-def update_img_profile(request):
+def update_profile(request):
     profile = request.user.profile
-    image_form = ImageForm(request.POST, request.FILES, instance=profile)
+    image_form = ImageForm(request.POST or None, request.FILES or None, instance=profile)
+    profile_form = ProfileUpdateForm(request.POST or None, instance=request.user)
     if request.method == 'POST':
         if image_form.is_valid():
             image_form.save()
-            return redirect('profile')
-    return render(request, 'CRUD/update_img_profile.html', {'profile': profile, 'image_form': image_form})
-
-@login_required
-def update_info_profile(request):
-    profile_form = ProfileUpdateForm(request.POST or None, instance=request.user)
-    if request.method == 'POST':
+            messages.success(request, 'Your profile picture has been updated.')
+            return redirect('update_profile')
         if profile_form.is_valid():
             profile_form.save()
             return redirect('profile')
-    return render(request, 'CRUD/update_info_profile.html', {'profile_form': profile_form})
+    return render(request, 'CRUD/update_profile.html', {'profile': profile, 'image_form': image_form, 'profile_form': profile_form})
     
     
 def search(request):
@@ -141,6 +128,7 @@ def login_user(request):
         return render(request, 'login.html')
 
 # Faltan validaciones
+@login_required
 def logout_user(request):
     logout(request)
     return redirect('home')

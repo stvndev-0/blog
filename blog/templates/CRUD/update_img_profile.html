@@ -1,35 +1,18 @@
-{% load static %}
-
-
-{% if profile.image %}
-<img src="{{ profile.image.url }}" alt="" width="100">
-{% else %}
-<img src="{% static 'assest/default.jpg' %}" alt="" width="100">
-{% endif %}
-
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{image_form.as_p}}
-    <button type="submit" class="btn btn-success">Update Image</button>
-</form>
-
-<!-- <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalToggleLabel">Confirm Delete</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="post">
-                <div class="modal-body">
-                    {% csrf_token %}
-                    {{image_form.as_p}}
-                </div>
-                <div class="modal-footer">          
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">Update Image</button>
-                </div>
-            </form>
+            <div class="modal-body">
+                {% csrf_token %}
+                {{image_form}}
+            </div>
+            <div class="modal-footer">          
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success">Update Image</button>
+            </div>
         </div>
     </div>
-</div> -->
+</div>
