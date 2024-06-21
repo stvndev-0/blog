@@ -43,13 +43,18 @@ class ProfileUpdateForm(UserChangeForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
         }
 
+# Aca falta el Password update!!!!
+
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('image',)
         widgets = {
-			'image': forms.ClearableFileInput(attrs={'class': 'form-control'})
-		}
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+        required = {
+            'image': False,
+        }
 
 class PostForm(forms.ModelForm):
 	class Meta:
@@ -62,13 +67,15 @@ class PostForm(forms.ModelForm):
 			'body': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Body'})
 		}
 
+	# Eliminar
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.fields['cover'].widget.attrs.update({'accept': '.jpg, .jpeg, .png'})  
 
 class CommentForm(forms.ModelForm):
-	text = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Write comment'}))
-
 	class Meta:
 		model = Comment
 		fields = ('text',)
+		widgets = {
+			'text': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Write comment'})
+		}

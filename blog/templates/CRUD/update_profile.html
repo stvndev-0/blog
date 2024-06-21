@@ -3,8 +3,8 @@
 {% block content %}
 <br>
 <div class="container">
-    {% if profile.image %}
-        <img src="{{ profile.image.url }}" alt="" width="100">
+    {% if profile %}
+        <img src="{{ profile }}" alt="" width="100">
     {% else %}
         <img src="{% static 'assest/default.jpg' %}" alt="" width="100">
     {% endif %}

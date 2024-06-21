@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Profile, Post, Comment
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import SignUpForm, ProfileUpdateForm, ImageForm, PostForm, CommentForm
+from django.db.models import Q
 from django.contrib import messages
+from .models import Profile, Post
+from .forms import SignUpForm, ProfileUpdateForm, ImageForm, PostForm, CommentForm
 
 # Create your views here.
 def home(request):
@@ -17,13 +18,10 @@ def post(request, post_id):
     form = CommentForm()
     return render(request, 'post.html', {'post': post, 'comments': comments, 'form': form})
 
+@login_required
 def my_post(request):
-    if request.user.is_authenticated:
-        my_posts = Post.objects.filter(author=request.user)
-        return render(request, 'my_post.html', {'my_posts': my_posts})
-    else:
-        messages.success(request, 'You must log in to access that web page')
-        return redirect("home")
+    my_posts = Post.objects.filter(author=request.user)
+    return render(request, 'my_post.html', {'my_posts': my_posts})
 
 # Faltan validaciones
 @login_required
@@ -66,7 +64,7 @@ def delete_post(request, post_id):
         return redirect('my_post')
     else:
         messages.error(request, 'You must log in to access that web page')
-        return render(request, 'CRUD/delete_post.html', {'post': post})
+        return render(request, 'delete_post.html', {'post': post})
 
 @login_required
 def comment_post(request, post_id):
@@ -87,7 +85,7 @@ def profile(request):
     return render(request, 'profile.html', {'user': current_user, 'image': image_user})
 
 
-
+# Faltan validaciones
 @login_required
 def update_profile(request):
     profile = request.user.profile
@@ -101,11 +99,8 @@ def update_profile(request):
         if profile_form.is_valid():
             profile_form.save()
             return redirect('profile')
-    return render(request, 'CRUD/update_profile.html', {'profile': profile, 'image_form': image_form, 'profile_form': profile_form})
-    
-    
-def search(request):
-    pass
+    return render(request, 'CRUD/update_profile.html', {'image_form': image_form, 'profile_form': profile_form})
+
 
 # Faltan validaciones
 def login_user(request):
@@ -127,6 +122,7 @@ def login_user(request):
     else:
         return render(request, 'login.html')
 
+
 # Faltan validaciones
 @login_required
 def logout_user(request):
@@ -134,6 +130,7 @@ def logout_user(request):
     return redirect('home')
 
 # Faltan validaciones
+# Al momento de que se cree un usuario se creare el perfil con una imagen default
 def register_user(request):
     form = SignUpForm()
     if request.method == 'POST':
@@ -151,3 +148,14 @@ def register_user(request):
             return redirect("register")
     else:
         return render(request, 'register.html', {'form': form})
+    
+
+def search(request):
+    if request.method == 'POST':
+        search = request.POST['searched']
+        searched = Post.objects.filter(Q(title__icontains=search) | Q(subtitle__icontains=search) | Q(body__icontains=search))
+        # Si no hay resultados
+        if not searched:
+            messages.error(request, 'The searched publication was not found.')
+        else:
+            return render(request, 'search.html', {'searched': searched}) 

@@ -17,7 +17,7 @@
 
     <form action="{% url 'comment_post' post.id %}" method="post">
         {% csrf_token %}
-        {{form}}
+        {{form.as_p}}
         <button type="button" class="btn btn-outline-secondary">Calcelar</button>
         <button type="submit" class="btn btn-primary">Comment</button>
     </form>
@@ -25,7 +25,7 @@
     <h6>Comments</h6>
 
     {% for comment in comments %}
-    {{comment.text}} - {{comment.author.username}} - {{comment.created_at}} <br><br>
+        <img src="{{profile}}" alt="" width="40px" class="rounded-circle"> {{comment.text}} - {{comment.author.username}} - {{comment.created_at}} <br><br>
     {% endfor %}
 
     <a href="{% url 'home' %}">Volver</a>
