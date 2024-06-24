@@ -92,13 +92,13 @@ def update_profile(request):
     image_form = ImageForm(request.POST or None, request.FILES or None, instance=profile)
     profile_form = ProfileUpdateForm(request.POST or None, instance=request.user)
     if request.method == 'POST':
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profile')
         if image_form.is_valid():
             image_form.save()
             messages.success(request, 'Your profile picture has been updated.')
             return redirect('update_profile')
-        if profile_form.is_valid():
-            profile_form.save()
-            return redirect('profile')
     return render(request, 'CRUD/update_profile.html', {'image_form': image_form, 'profile_form': profile_form})
 
 

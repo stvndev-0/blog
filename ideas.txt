@@ -1,1 +1,3 @@
 Creame un icono que sirva para una pagina web ecomerce y un blog, que diga Reyvi
+
+agregar un modulo llamado categoria 

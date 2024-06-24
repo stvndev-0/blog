@@ -67,12 +67,16 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "mssql",
         "NAME": "blog",
-        "USER": "postgres",
+        "USER": "sa",
         "PASSWORD": "root",
         "HOST": "localhost",
-        "PORT": "5432",
+        # "PORT": "5432",
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'Trusted_Connection': 'yes',
+        }
     }
 }
 
@@ -112,6 +116,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
 # FOR IMAGE
 MEDIA_URL = '/media/'

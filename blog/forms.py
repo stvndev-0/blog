@@ -59,18 +59,15 @@ class ImageForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
 	class Meta:
 		model = Post
-		fields = ('title', 'subtitle', 'cover', 'body')
+		fields = ('category', 'subcategory', 'title', 'subtitle', 'cover', 'body')
 		widgets = {
+			'category': forms.Select(attrs={'class':'form-control', 'placeholder':'Select Category'}),
+			'subcategory': forms.Select(attrs={'class':'form-control', 'placeholder':'Select Category'}),
 			'title': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Title'}),
 			'subtitle': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Subtitle'}),
 			'cover': forms.ClearableFileInput(attrs={'class': 'form-control'}),
 			'body': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Body'})
 		}
-
-	# Eliminar
-	def __init__(self, *args, **kwargs):
-		super().__init__(*args, **kwargs)
-		self.fields['cover'].widget.attrs.update({'accept': '.jpg, .jpeg, .png'})  
 
 class CommentForm(forms.ModelForm):
 	class Meta:

@@ -3,22 +3,69 @@
 {% block content %}
 
 <div class="container">
-    <h1>Profile</h1>
-    
-    
-    {% if image.image %}
-    <img src="{{image.image.url}}" alt="" width="100">
-    {% else %}
-    <img src="{% static 'assest/default.jpg' %}" alt="" width="100">
-    {% endif %}
+    <header class="d-md-flex align-items-center justify-content-between mb-4" aria-labelledby="settings-header">
+        <div class="d-flex align-items-center mb-2 margin-bottom">
+            {% if image.image %}
+            <img class="rounded-circle me-3" src="{{image.image.url}}" alt="" height="48" width="48">
+            {% else %}
+            <img class="rounded-circle ms-3" src="{% static 'assest/default.jpg' %}" alt="" height="48" width="48">
+            {% endif %}
+            <div>
+                <h1 id="settings-header" class="fs-5 lh-sm mb-0">
+                    <a href="{% url 'profile' %}" class="text-dark link-dark link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                        Esteban Villaseca
+                        <span class="text-body-tertiary">(esteriv)</span>
+                    </a>
+                </h1>
+                <div class="d-flex align-items-center flex-wrap">
+                    <p class="text-body-tertiary mb-0 me-2">
+                        Your personal account
+                    </p>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-secondary">
+        Go to your personal profile
+        </a>
+    </header>
 
-    <br><br>
-    <label for="">Username</label> <input type="text" placeholder="{{user.username}}" disabled> <br>
-    <label for="">Name</label> <input type="text" placeholder="{{user.first_name}}" disabled> <br>
-    <label for="">Last name</label> <input type="text" placeholder="{{user.last_name}}" disabled> <br>
-    <label for="">Email</label> <input type="text" placeholder="{{user.email}}" disabled>
-    <br><br>
-    <a href="{% url 'update_profile' %}" class="btn btn-success">Update Profile</a> 
+    <div class="d-flex items-column-reverse">
+
+    
+
+      <div class="col-12 col-md-8">
+        <br><br>
+        <label for="">Username</label> <input type="text" placeholder="{{user.username}}" disabled> <br>
+        <label for="">Name</label> <input type="text" placeholder="{{user.first_name}}" disabled> <br>
+        <label for="">Last name</label> <input type="text" placeholder="{{user.last_name}}" disabled> <br>
+        <label for="">Email</label> <input type="text" placeholder="{{user.email}}" disabled>
+        <br><br>
+      </div>
+    
+    
+      <div class="col-12 col-md-4">
+        <dl>
+          <dt><label class="d-block mb-2">Profile picture</label></dt>
+          <div class="avatar-upload">
+            <details class="dropdown details-reset details-overlay">
+              <summary aria-haspopup="menu" role="button">
+                <img class="avatar rounded-2 avatar-user" src="https://avatars.githubusercontent.com/u/96550791?s=400&amp;u=51649cf184241fa75a3f02b756f76a34ce920100&amp;v=4" width="200" height="200" alt="@esteriv">
+                <div class="position-absolute color-bg-default rounded-2 color-fg-default px-2 py-1 left-0 bottom-0 ml-2 mb-2 border">
+                      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-pencil">
+                        <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"></path>
+                      </svg>
+                        Edit
+                    </div>
+                  </summary
+            </details>               
+                  </div>
+                </div>
+            </dd>
+          </dl>
+      </div>
+      <a href="{% url 'update_profile' %}" class="btn btn-success">Update Profile</a> 
+    </div>
+    
 </div>
 
 {% endblock %}
