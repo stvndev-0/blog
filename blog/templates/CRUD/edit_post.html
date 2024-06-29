@@ -10,4 +10,26 @@
     </form>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('#id_category').change(function() {
+            var url = "{% url 'load_subcategories' %}";  // Update with the URL to your view
+            var categoryId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'category_id': categoryId
+                },
+                success: function(data) {
+                    $("#id_subcategory").html('<option value="">---------</option>');
+                    $.each(data, function(key, value) {
+                        $("#id_subcategory").append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock %}

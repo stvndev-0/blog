@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    
+      <div class="col-12 col-md-8">
+        <br><br>
+        <label for="">Username</label> <input type="text" placeholder="{{user.username}}" disabled> <br>
+        <label for="">Name</label> <input type="text" placeholder="{{user.first_name}}" disabled> <br>
+        <label for="">Last name</label> <input type="text" placeholder="{{user.last_name}}" disabled> <br>
+        <label for="">Email</label> <input type="text" placeholder="{{user.email}}" disabled>
+        <br><br>
+      </div>
+      <a href="{% url 'update_profile' %}" class="btn btn-success">Update Profile</a> 
+    
+    
+</div>
+
+{% endblock %}

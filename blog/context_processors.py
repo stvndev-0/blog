@@ -1,10 +1,6 @@
 from django.shortcuts import get_object_or_404
-from .models import Profile
+from .models import Category
 
-def profile_img(request):
-    if request.user.is_authenticated:
-        profile, created = Profile.objects.get_or_create(user=request.user)
-        # Comprobamos si profile.image existe y tiene un atributo 'url'
-        if profile.image and hasattr(profile.image, 'url'):
-            return {'profile': profile.image.url}
-    return {}
+def all_category(request):
+    categories = Category.objects.all()
+    return {'categories': categories }

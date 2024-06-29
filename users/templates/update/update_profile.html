@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <header class="d-md-flex align-items-center justify-content-between mb-4" aria-labelledby="settings-header">
+        <div class="d-flex align-items-center mb-2 margin-bottom">
+            {% if profile %}
+            <img class="rounded-circle me-3" src="{{profile}}" alt="" height="48" width="48">
+            {% else %}
+            <img class="rounded-circle ms-3" src="{% static 'default.jpg' %}" alt="" height="48" width="48">
+            {% endif %}
+            <div>
+                <h1 id="settings-header" class="fs-5 lh-sm mb-0">
+                    <a href="{% url 'profile' %}" class="text-dark link-dark link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                        Esteban Villaseca
+                        <span class="text-body-tertiary">(esteriv)</span>
+                    </a>
+                </h1>
+                <div class="d-flex align-items-center flex-wrap">
+                    <p class="text-body-tertiary mb-0 me-2">
+                        Your personal account
+                    </p>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-secondary">
+        Go to your personal profile
+        </a>
+    </header>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% include 'update/update_img.html' %}
+    </form>
+    
+    <button data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Actualizar foto</button>
+    <br><br>
+    <div class="clearfix mx-4 d-flex items-column-reverse flex-row">
+        <div class="col-12 col-md-8">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{profile_form.as_p}}
+                <button type="submit" class="btn btn-success">Update profile</button>
+                <button type="submit" class="btn btn-success">Update password</button>
+            </form>
+        </div>
+        <div class="col-12 col-md-4">
+            <dl>
+                <dt><label class="d-block mb-2">Profile picture</label></dt>
+                <dd class="avatar-upload-container clearfix position-relative">
+                    <form data-turbo="false" class="edit_user" novalidate="novalidate" aria-label="Profile picture" action="/users/esteriv" accept-charset="UTF-8" method="post">
+                        <input type="hidden" name="_method" value="put" autocomplete="off">
+                        <input type="hidden" name="authenticity_token" value="1NgkJ3vm3iAyrh2jo8gFd8VWF7TzCBa6XxEatQ2cXYSQsFVFVV0EZ_q77iJeG5v9EJFmLvJ0tnmsvlpzvmkw4Q">
+                        <file-attachment input="avatar_upload" class="js-upload-avatar-image is-default" data-alambic-owner-id="96550791" data-alambic-owner-type="User" data-upload-policy-url="/upload/policies/avatars">
+                            <input type="hidden" value="xzHsn5HpE0glG3iJ5SkpwBR1mQO0KaxNBKB79CaYp98Ty2kkbhsvT_wXGR3GqwLq1fy_JS0QqmkIJwfS22s0zA" data-csrf="true" class="js-data-upload-policy-url-csrf">
+                            <input type="file" id="avatar_upload" class="manual-file-chooser width-full ml-0" hidden="">
+                        </file-attachment>
+                    </form>
+                    
+                    <div class="dropdown">
+                        <span class="bg" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if profile %}
+                            <img class="rounded-circle" src="{{ profile }}" width="200" height="200" alt="">
+                            {% else %}
+                            <img class="rounded-circle" src="{% static 'default.jpg' %}" width="200" height="200" alt="">
+                            {% endif %}
+                            <div class="position-absolute bg-light rounded px-2 py-1 start-0 bottom-0 ms-2 mb-2 border">
+                                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" class="bi bi-pencil">
+                                    <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"></path>
+                                </svg>
+                                Edit
+                            </div>
+                        </span>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#">Upload a photo...</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Remove photo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+        </div>        
+    </div>
+</div>
+{% endblock %}

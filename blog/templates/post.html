@@ -3,15 +3,17 @@
 {% block content %}
 <br><br>
 <div class="container">
-    <h1>{{post.title}}</h1> <br>
-    <p>{{post.subtitle}}</p>
+    <h1>{{post.title}}</h1>
+    <br>
+    <p>Create by {{post.author.first_name}} {{post.author.last_name}}. {{post.created_at}}</p> <br>
     <br>
     <img src="{{post.cover.url}}" alt="" width="200px">
-    <br><br>
-    {{post.created_at}} 
     <br>
-    <p>Create by {{post.author.username}}</p> <br>
-    <p>{{post.body}}</p> <br>
+    <p>{{post.subtitle}}</p>
+    <br>
+    <br>
+    
+    {{post.content|safe}} <br>
     <br>
     <br>
 
