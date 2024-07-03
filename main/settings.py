@@ -76,18 +76,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-    # "default": {
-    #     "ENGINE": "mssql",
-    #     "NAME": "blog",
-    #     "USER": "sa",
-    #     "PASSWORD": "root",
-    #     "HOST": "localhost",
-    #     # "PORT": "5432",
-    #     'OPTIONS': {
-    #         'driver': 'ODBC Driver 17 for SQL Server',
-    #         'Trusted_Connection': 'yes',
-    #     }
-    # }
 }
 
 
@@ -133,6 +121,9 @@ STATICFILES_DIRS = [
 # FOR IMAGE
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+CSRF_COOKIE_SECURE = True  # Si estás usando HTTPS
+CSRF_COOKIE_HTTPONLY = True
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
