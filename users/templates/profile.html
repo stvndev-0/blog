@@ -3,18 +3,26 @@
 {% block content %}
 
 <div class="container">
+  <div class="d-flex align-items-center mb-2">
+    {% if profile %}
+    <img class="rounded-circle me-3" src="{{profile}}" alt="" height="100" width="100">
+    {% else %}
+    <img class="rounded-circle me-3" src="{% static 'images/default.jpg' %}" alt="" height="100" width="100">
+    {% endif %}
     
-      <div class="col-12 col-md-8">
-        <br><br>
-        <label for="">Username</label> <input type="text" placeholder="{{user.username}}" disabled> <br>
-        <label for="">Name</label> <input type="text" placeholder="{{user.first_name}}" disabled> <br>
-        <label for="">Last name</label> <input type="text" placeholder="{{user.last_name}}" disabled> <br>
-        <label for="">Email</label> <input type="text" placeholder="{{user.email}}" disabled>
-        <br><br>
+    <div>
+        <h1 id="settings-header" class="fs-5 lh-sm mb-0">
+          {{user.first_name}} {{user.last_name}}
+        </h1>
+        <div class="d-flex align-items-center flex-wrap">
+            <p class="mb-0 me-2">
+                bio
+            </p>
+        </div>
       </div>
-      <a href="{% url 'update_profile' %}" class="btn btn-success">Update Profile</a> 
-    
-    
+    </div>
+    <h1>Recetas</h1>
+    <a href="{% url 'update_profile' %}" class="btn btn-success">Update Profile</a> 
 </div>
 
 {% endblock %}

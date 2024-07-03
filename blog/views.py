@@ -3,20 +3,38 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
 from django.db.models import Q
-from .models import Category, SubCategory, Post
+from .models import Category, SubCategory, Post, Comment
 from .forms import PostForm, CommentForm
 
 # Create your views here.
 def home(request):
-    all_post = Post.objects.all()
+    all_post = Post.objects.all().order_by('-created_at')
     return render(request, 'home.html', {'all_post': all_post})
 
 
 def post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    comments = post.comments.all()
+    comments = post.comments.filter(parent=None).order_by('-created_at')
     form = CommentForm()
-    return render(request, 'post.html', {'post': post, 'comments': comments, 'form': form})
+    return render(request, 'view_post.html', {'post': post, 'comments': comments, 'form': form})
+
+# Falidaciones??¿¿¿
+@login_required
+def add_comment(request, post_id, parent_id=None):
+    post = get_object_or_404(Post, id=post_id)
+    parent_comment = None
+    if parent_id:
+        parent_comment = get_object_or_404(Comment, id=parent_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.author = request.user
+            new_comment.post = post
+            new_comment.parent = parent_comment
+            new_comment.save()
+            return redirect('post', post_id)
 
 
 @login_required
@@ -38,14 +56,7 @@ def create_post(request):
     else:
         form = PostForm()
         
-    return render(request, 'CRUD/create_post.html', {'form': form})
-
-# Carga de subcategorias
-def load_subcategories(request):
-    category_id = request.GET.get('category_id')
-    subcategories = SubCategory.objects.filter(category_id=category_id).order_by('name')
-    return JsonResponse(list(subcategories.values('id', 'name')), safe=False)
-
+    return render(request, 'CRUD/post_form.html', {'form': form})
 
 @login_required
 def edit_post(request, post_id):
@@ -61,8 +72,13 @@ def edit_post(request, post_id):
             return redirect('post', post_id=post.id)
     else:
         form = PostForm(instance=post)
-        return render(request, 'CRUD/edit_post.html', {'form': form})
+        return render(request, 'CRUD/post_form.html', {'form': form})
 
+# Carga de subcategorias
+def load_subcategories(request):
+    category_id = request.GET.get('category_id')
+    subcategories = SubCategory.objects.filter(category_id=category_id).order_by('name')
+    return JsonResponse(list(subcategories.values('id', 'name')), safe=False)
 
 @login_required
 def delete_post(request, post_id):
@@ -76,26 +92,14 @@ def delete_post(request, post_id):
         return render(request, 'delete_post.html', {'post': post})
 
 
-@login_required
-def comment_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    if request.POST:
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.post = post
-            comment.save()
-            return redirect('post', post_id)
-
-
 def search(request):
     if request.method == 'POST':
         search = request.POST['searched']
-        searched = Post.objects.filter(Q(title__icontains=search) | Q(subtitle__icontains=search) | Q(body__icontains=search))
+        searched = Post.objects.filter(Q(title__icontains=search) | Q(subtitle__icontains=search) | Q(content__icontains=search))
         # Si no hay resultados
         if not searched:
             messages.error(request, 'The searched publication was not found.')
+            return redirect('home')
         else:
             return render(request, 'search.html', {'searched': searched}) 
 

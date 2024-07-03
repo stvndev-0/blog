@@ -1,0 +1,26 @@
+{% load static %}
+<header class="d-md-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center mb-2">
+        {% if profile %}
+            <img class="rounded-circle me-3" src="{{profile}}" alt="" height="60" width="60">
+        {% else %}
+            <img class="rounded-circle me-3" src="{% static 'images/default.jpg' %}" alt="" height="60" width="60">
+        {% endif %}
+        <div>
+            <h1 id="settings-header" class="fs-5 lh-sm mb-0">
+                <a href="{% url 'profile' %}" class="text-dark link-dark link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                    {{user.first_name}} {{user.last_name}}
+                    <span class="text-body-tertiary">({{user.username}})</span>
+                </a>
+            </h1>
+            <div class="d-flex align-items-center flex-wrap">
+                <p class="text-body-tertiary mb-0 me-2">
+                    Your personal account
+                </p>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-secondary">
+    Go to your personal profile
+    </a>
+</header>

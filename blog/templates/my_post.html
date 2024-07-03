@@ -3,29 +3,21 @@
 {% block content %}
 
 
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <h3>My Post</h3>
-        <a href="{% url 'create_post' %}" class="btn btn-secondary">Create Post</a>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% for post in my_posts %}
-            <div class="col mb-5">
-                <div class="card" style="width: 18rem;">
-                    <img src="{{post.cover.url}}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{post.title}}</h5>
-                        <p class="card-text">{{post.subtitle}}</p>
-                        <a href="{% url  'post' post.id %}" class="btn btn-primary">View</a>
-                        <a href="{% url 'edit_post' post.id %}" class="btn btn-success">Edit</a>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">delete</button>
-
-                        {% include 'CRUD/delete_post.html' %}
-                    </div>
+<div class="container py-5">
+    <h3>Post</h3>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for post in my_posts %}
+        <div class="col">
+            <div class="card">
+                <img src="{{post.cover.url}}" class="card-img-top" alt="{{post.cover.name}}" >
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <a href="{% url 'post' post.id %}" class="btn btn-primary">View</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
-</section>
+</div>
 
 {% endblock %}

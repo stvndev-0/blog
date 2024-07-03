@@ -7,7 +7,7 @@
     <br>
     <p>Create by {{post.author.first_name}} {{post.author.last_name}}. {{post.created_at}}</p> <br>
     <br>
-    <img src="{{post.cover.url}}" alt="" width="200px">
+    <img src="{{post.cover.url}}" alt="" width="600" height="450">
     <br>
     <p>{{post.subtitle}}</p>
     <br>
@@ -17,20 +17,21 @@
     <br>
     <br>
 
-    <form action="{% url 'comment_post' post.id %}" method="post">
+    <h6>Leave a comment</h6>
+    <form action="{% url 'add_comment' post.id %}" method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="button" class="btn btn-outline-secondary">Calcelar</button>
         <button type="submit" class="btn btn-primary">Comment</button>
     </form>
+
     <br>
+    
     <h6>Comments</h6>
-
-    {% for comment in comments %}
-        <img src="{{profile}}" alt="" width="40px" class="rounded-circle"> {{comment.text}} - {{comment.author.username}} - {{comment.created_at}} <br><br>
-    {% endfor %}
-
-    <a href="{% url 'home' %}">Volver</a>
+    <ul>
+        {% for comment in comments %}
+            {% include 'CRUD/comment.html' %}
+        {% endfor %}
+    </ul>
 </div>
 
 {% endblock %}    

@@ -1,0 +1,14 @@
+<li>
+    <img src="{{profile}}" alt="" width="40" class="rounded-circle"> {{comment.author.username}}: {{comment.text}}
+    <br>
+    <form action="{% url 'add_comment_reply' post.id comment.id %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Comment</button>
+    </form>
+    <ul>
+        {% for reply in comment.replies.all %}
+            {% include 'CRUD/comment.html' with comment=reply %}
+        {% endfor %}
+    </ul>
+</li>

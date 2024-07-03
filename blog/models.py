@@ -34,6 +34,8 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    # 'self' se utiliza aqui para indicar que la relacion es con el mismo modelo en que se define el campo
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
 
     def __str__(self):
         return f'Comment on {self.post.title} by {self.author.username}'

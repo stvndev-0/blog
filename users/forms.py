@@ -66,7 +66,7 @@ class ImageForm(forms.ModelForm):
         model = Profile
         fields = ('image',)
         widgets = {
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
         }
         required = {
             'image': False,

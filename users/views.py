@@ -1,32 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile
 from .forms import ChangePasswordForm, SignUpForm, ProfileUpdateForm, ImageForm
-
-@login_required
-def profile(request):
-    current_user = User.objects.get(id=request.user.id)
-    image_user = Profile.objects.get(user=request.user)
-    return render(request, 'profile.html', {'user': current_user, 'image': image_user})
-
-# Faltan validaciones
-@login_required
-def update_profile(request):
-    profile = request.user.profile
-    image_form = ImageForm(request.POST or None, request.FILES or None, instance=profile)
-    profile_form = ProfileUpdateForm(request.POST or None, instance=request.user)
-    if request.method == 'POST':
-        if profile_form.is_valid():
-            profile_form.save()
-            return redirect('profile')
-        if image_form.is_valid():
-            image_form.save()
-            messages.success(request, 'Your profile picture has been updated.')
-            return redirect('update_profile')
-    return render(request, 'update/update_profile.html', {'image_form': image_form, 'profile_form': profile_form})
 
 # Faltan validaciones
 def login_user(request):
@@ -72,23 +50,50 @@ def register_user(request):
             return redirect("register")
     else:
         return render(request, 'register.html', {'form': form})
+    
+@login_required
+def profile(request):
+    current_user = User.objects.get(id=request.user.id)
+    image_user = Profile.objects.get(user=request.user)
+    return render(request, 'profile.html', {'user': current_user, 'image': image_user})
+
+# Faltan validaciones
+@login_required
+def update_profile(request):
+    profile = request.user.profile
+    image_form = ImageForm(request.POST or None, request.FILES or None, instance=profile)
+    profile_form = ProfileUpdateForm(request.POST or None, instance=request.user)
+    if request.method == 'POST':
+        if 'remove_image' in request.POST:
+            profile.image.delete()
+            profile.save()
+            messages.error(request, 'You have delete profile image')
+            return redirect('update_profile')
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profile')
+        if image_form.is_valid():
+            image_form.save()
+            messages.success(request, 'Your profile picture has been updated.')
+            return redirect('update_profile')
+    return render(request, 'crud/update_profile.html', {'image_form': image_form, 'profile_form': profile_form})
 
 # Faltan validaciones en el form
 @login_required
 def update_password(request):
     current_user = request.user
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ChangePasswordForm(current_user, request.POST)
         # ¿El formulario es valido?
         if form.is_valid():
             form.save()
-            messages.success(request, "")
+            messages.success(request, 'Your password has been updated')
             login(request, current_user)
-            return redirect("update_user")
+            return redirect('update_profile')
         else:
             for error in list(form.errors.values()):
                 messages.error(request, error)
-                return redirect("update_password")
+                return redirect('update_password')
     else:
         form = ChangePasswordForm(current_user)
-        return render(request, "update_password.html", {"form": form})
+        return render(request, 'crud/update_password.html', {'form': form})
