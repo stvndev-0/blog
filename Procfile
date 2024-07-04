@@ -1,2 +1,2 @@
 release: python manage.py collectstatic --noinput && python manage.py migrate
-web: gunicorn blog.wsgi:application
+web: gunicorn main.wsgi:application
