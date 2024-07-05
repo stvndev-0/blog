@@ -4,7 +4,8 @@
 
 
 <div class="container py-5">
-    <h3>Post</h3>
+    <h3>My Post</h3>
+    <a href="{% url 'create_post' %}" class="btn btn-secondary">Create Post</a>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for post in my_posts %}
         <div class="col">
@@ -13,6 +14,10 @@
                 <div class="card-body">
                     <h5 class="card-title">{{post.title}}</h5>
                     <a href="{% url 'post' post.id %}" class="btn btn-primary">View</a>
+                    <a href="{% url 'edit_post' post.id %}" class="btn btn-success">Edit</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">delete</button>
+
+                    {% include 'CRUD/delete_post.html' %}
                 </div>
             </div>
         </div>
