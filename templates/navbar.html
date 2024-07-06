@@ -1,44 +1,66 @@
 {% load static %}
-<header class="border-bottom lh-1 py-3">
-  <div class="row flex-nowrap justify-content-between align-items-center">
-    <div class="col-4 pt-1">
-      <a class="link-secondary" href="{% url 'home' %}"><img class="rounded-circle" src="{% static 'images/ecomerce.jpg' %}" alt="" width="52" height="52"></a>
-    </div>
-    <div class="col-4 text-center">
-      <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">RecipesBlog</a>
-    </div>
-    <div class="col-4 d-flex justify-content-end align-items-center">
-      <form method="post" action="{% url 'search' %}" class="col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-        {% csrf_token %}
-        <input type="text" class="form-control form-control-sm" placeholder="Search..." name="searched">
-      </form>
-      {% if request.user.is_authenticated %}
-      <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        {% if profile %}
-          <img src="{{ profile }}" width="42" height="42" class="rounded-circle">
-        {% else %}
-          <img src="{% static 'images/default.jpg' %}" width="42" height="42" class="rounded-circle">
-        {% endif %}
-      </a>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
-        <li><a class="dropdown-item" href="{% url 'my_post' %}">My Post</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-      </ul>
-      {% else %}
-      <div>
-        <a class="btn btn-sm btn-outline-warning" href="{% url 'login' %}">Login</a>
-        <a class="btn btn-sm btn-outline-secondary" href="{% url 'register' %}">Sign-up</a>
+<div class="py-4 border-bottom">
+  <div class="container mx-auto px-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- Redes sociales -->
+      <div class="d-flex flex-row">
+        <a class="text-body-secondary me-2" href="https://github.com/esteriv" target="_blank">
+          <svg class="bi" width="24" height="24">
+            <use xlink:href="#github"></use>
+          </svg>
+        </a>
+        <a class="text-body-secondary" href="https://www.linkedin.com/in/estebvillaseca/" target="_blank">
+          <svg class="bi" width="24" height="24">
+            <use xlink:href="#linkedin"></use>
+          </svg>
+        </a>
       </div>
-      {% endif %}
-    </div>  
+
+      <!-- Logo -->
+      <a class="position-relative" href="{% url 'home' %}">
+        <img class="rounded-circle" src="{% static 'images/ecomerce.jpg' %}" alt="" width="52" height="52">
+      </a>
+
+      <!-- Perfil de usuario -->
+      <div class="d-flex justify-content-end align-items-center">
+        <div class="me-2 d-inline-block text-start position-relative">
+          {% if request.user.is_authenticated %}
+          <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-uppercase lh-sm dropdown-toggle " id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="fs-6 lh-base">
+                {% if profile %}
+                  <img src="{{ profile }}" width="42" height="42" class="rounded-circle">
+                {% else %}
+                  <img src="{% static 'images/default.jpg' %}" width="42" height="42" class="rounded-circle">
+                {% endif %}
+              </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'my_post' %}">My Posts</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+          </div>
+          {% else %}
+          <div>
+            <a class="btn btn-sm btn-outline-warning" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-sm btn-outline-secondary" href="{% url 'register' %}">Sign-up</a>
+          </div>
+          {% endif %}
+        </div>    
+        <a href="#" class="rounded-circle"><i class="bi bi-search"></i></a>
+      </div>
+    </div>
+    <!-- Nav -->
+    <nav class="mt-3 position-relative d-flex justify-content-center align-items-center">
+      <ul class="navbar-nav d-flex flex-row ">
+        {% for category in categories %}
+        <li class="px-2 nav-item">
+          <a class="nav-link link-body-emphasis" href="{% url 'seccion' category.name %}">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
   </div>
-</header>
-<div class="nav-scroller py-1 mb-3 border-bottom">
-  <nav class="nav nav-underline justify-content-between">
-  {% for category in categories %}
-    <a class="nav-item nav-link link-body-emphasis" href="{% url 'seccion' category.name %}">{{category.name}}</a>
-  {% endfor %}
-  </nav>
 </div>
