@@ -1,0 +1,23 @@
+body{
+    background-color: rgb(0, 0, 0);
+}
+
+.gridblog {
+    margin-top: 46px !important;
+}
+
+.cardblog{
+    width: 338px;
+    height: 290px;
+    display: flex;
+    flex-direction: column;
+}
+
+.imgblog{
+    height: 200px;
+    display: flex;
+}
+
+.imgblog img{
+    object-fit: cover;
+}

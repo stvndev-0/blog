@@ -1,7 +1,3 @@
-static
-templates
-media
-
 <!-- <form method="post" action="{% url 'search' %}" class="" role="search">
             {% csrf_token %}
             <input type="text" class="form-control form-control-sm" placeholder="Search..." name="searched">

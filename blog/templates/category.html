@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container py-5">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for post in post_category %}
-        <div class="col mb-5">
-            <div class="card">
-                <img src="{{post.cover.url}}" class="card-img-top" alt="{{post.cover.name}}" >
-                <div class="card-body">
-                    <h5 class="card-title">{{post.title}}</h5>
-                    <a href="{% url 'post' post.id %}" class="btn btn-primary">View</a>
-                </div>
+
+<h1>Post {{subCategory.name}}</h1>
+<div class="mt-3 row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for post in post_category %}
+    <div class="col mb-5">
+        <div class="card" style="width: 18rem;">
+            <img src="{{post.cover.url}}" class="card-img-top" alt="{{post.cover.name}}" >
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <a href="{% url 'post' post.id %}" class="btn btn-primary">View</a>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

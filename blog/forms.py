@@ -1,5 +1,6 @@
 from django import forms
 from .models import SubCategory, Post, Comment
+from ckeditor.widgets import CKEditorWidget
 
 class PostForm(forms.ModelForm):
 	class Meta:
@@ -10,7 +11,7 @@ class PostForm(forms.ModelForm):
 			'subcategory': forms.Select(attrs={'class':'form-control'}),
 			'title': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Title'}),
 			'cover': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-			'subtitle': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Subtitle'}),
+			'subtitle': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Subtitle'})
 		}
             
 	def __init__(self, *args, **kwargs):
@@ -24,7 +25,7 @@ class PostForm(forms.ModelForm):
 			except (ValueError, TypeError):
 				self.fields['subcategory'].queryset = SubCategory.objects.none()
 		elif self.instance.pk:
-			self.fields['subcategory'].queryset = self.instance.category.subcategories.order_by('name')
+			self.fields['subcategory'].queryset = self.instance.category.contents.order_by('name')
 		else:
 			self.fields['subcategory'].queryset = SubCategory.objects.none()
 

@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container px-4 px-lg-5 mt-5">
-    <h3>Post</h3>
-    {% for subcategory in subCategories %}
-        <a href="{% url 'category' subcategory.name %}" class="btn btn-outline-primary">{{subcategory.name}}</a>
-    {% endfor %}
 
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        {% for post in all_post %}
-        <div class="col mb-5">
-            <div class="card" style="width: 18rem;">
-                <img src="{{post.cover.url}}" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">{{post.title}}</h5>
-                    <p class="card-text">{{post.subtitle}}</p>
-                    <a href="{% url  'post' post.id %}" class="btn btn-primary">View Post</a>
-                </div>
-            </div>
-            </div>
-        {% endfor %}
+<h3>Seccion {{category.name}}</h3>
+<div class="d-flex justify-content-center align-items-center mt-3">
+    {% for subcategory in subCategories %}
+    <div class="px-2">
+        <a href="{% url 'category' subcategory.name %}" class="btn btn-outline-primary">{{subcategory.name}}</a>
     </div>
+    {% endfor %}
+</div>
+
+<div class="mt-3 row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for subcategory in subCategories %}
+    {% for post in subcategory.posts.all %}
+    <div class="col mb-5">
+        <div class="card" style="width: 18rem;">
+            <img src="{{post.cover.url}}" class="card-img-top" alt="{{post.cover.name}}">
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text">{{post.subtitle}}</p>
+                <a href="{% url  'post' post.id %}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
 </div>
 
 {% endblock %}

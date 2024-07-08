@@ -1,0 +1,6 @@
+el '{% with %}' se utiliza para definir una variable temporal dentro de una plantilla
+
+# Carpetas obligatorias
+static
+templates
+media

@@ -2,23 +2,21 @@
 {% load static %}
 {% block content %}
 
-
-<div class="container py-5">
-    <h3>Post</h3>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for post in all_post %}
-        <div class="col">
-            <div class="card">
-                <img src="{{post.cover.url}}" class="card-img-top" alt="{{post.cover.name}}" >
-                <div class="card-body">
-                    <h5 class="card-title">{{post.title}}</h5>
-                    <a href="{% url 'post' post.id %}" class="btn btn-primary">View</a>
-                </div>
+<h2>Blog De Viajes</h2>
+<div class="col-12 row d-flex justify-content-center">
+    {% for post in all_post %}
+    <div class="col gridblog">
+        <div class="card cardblog">
+            <div class="imgblog">
+                <img src="{{post.cover.url}}" class="w-100" alt="{{post.cover.name}}" >
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2">{{post.title}}</h6>
+                <a href="{% url 'post' post.id %}" class="btn btn-primary">View</a>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
-
 
 {% endblock %}

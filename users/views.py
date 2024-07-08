@@ -65,9 +65,13 @@ def update_profile(request):
     profile_form = ProfileUpdateForm(request.POST or None, instance=request.user)
     if request.method == 'POST':
         if 'remove_image' in request.POST:
-            profile.image.delete()
+            # Comprueba si la imagen a eliminar no sea la imagen por defecto
+            if profile.image.name != 'default.jpg':
+                profile.image.delete(save=False)
+            # Restablecer la imagen al valor predeterminado
+            profile.image = 'default.jpg'
             profile.save()
-            messages.error(request, 'You have delete profile image')
+            messages.error(request, 'You have deleted your profile image.')
             return redirect('update_profile')
         if profile_form.is_valid():
             profile_form.save()

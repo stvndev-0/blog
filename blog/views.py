@@ -106,11 +106,11 @@ def search(request):
 
 def seccion(request, name):
     category = get_object_or_404(Category, name=name)
-    subCategories = category.subcategories.all()
-    return render(request, 'seccion.html', {'subCategories': subCategories})
+    subCategories = category.contents.all()
+    return render(request, 'seccion.html', {'category': category, 'subCategories': subCategories})
 
 
 def category(request, categoryName):
     subCategory = SubCategory.objects.get(name=categoryName)
     post_category = subCategory.posts.all()
-    return render(request, 'category.html', {'post_category': post_category})
+    return render(request, 'category.html', {'subCategory': subCategory, 'post_category': post_category})

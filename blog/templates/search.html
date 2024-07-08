@@ -2,24 +2,22 @@
 {% load static %}
 {% block content %}
 
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <h3>Post</h3>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% for post in searched %}
-            <div class="col mb-5">
-                <div class="card" style="width: 18rem;">
-                    <img src="{{post.cover.url}}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{post.title}}</h5>
-                        <p class="card-text">{{post.subtitle}}</p>
-                        <a href="{% url  'post' post.id %}" class="btn btn-primary">View Post</a>
-                    </div>
-                </div>
-                </div>
-            {% endfor %}
+
+<h3>Post</h3>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1">
+    {% for post in searched %}
+    <div class="col mb-5">
+        <div class="card" style="width: 18rem;">
+            <img src="{{post.cover.url}}" class="card-img-top" alt="">
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text">{{post.subtitle}}</p>
+                <a href="{% url  'post' post.id %}" class="btn btn-primary">View Post</a>
+            </div>
         </div>
-    </div>
-</section>
+        </div>
+    {% endfor %}
+</div>
+
 
 {% endblock %}

@@ -18,7 +18,7 @@
 
       <!-- Logo -->
       <a class="position-relative" href="{% url 'home' %}">
-        <img class="rounded-circle" src="{% static 'images/ecomerce.jpg' %}" alt="" width="52" height="52">
+        <img class="rounded-circle" src="{% static 'images/logo.jpg' %}" alt="" width="52" height="52">
       </a>
 
       <!-- Perfil de usuario -->
@@ -26,7 +26,7 @@
         <div class="me-2 d-inline-block text-start position-relative">
           {% if request.user.is_authenticated %}
           <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-uppercase lh-sm dropdown-toggle " id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <span type="button" class="d-flex align-items-center text-uppercase lh-sm dropdown-toggle " id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               <div class="fs-6 lh-base">
                 {% if profile %}
                   <img src="{{ profile }}" width="42" height="42" class="rounded-circle">
@@ -34,7 +34,7 @@
                   <img src="{% static 'images/default.jpg' %}" width="42" height="42" class="rounded-circle">
                 {% endif %}
               </div>
-            </a>
+            </span>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
               <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
               <li><a class="dropdown-item" href="{% url 'my_post' %}">My Posts</a></li>
@@ -57,7 +57,7 @@
       <ul class="navbar-nav d-flex flex-row ">
         {% for category in categories %}
         <li class="px-2 nav-item">
-          <a class="nav-link link-body-emphasis" href="{% url 'seccion' category.name %}">{{ category.name }}</a>
+          <a class="nav-link link-body-emphasis" href="{% url 'seccion' category.name %}">{{ category.name }}</a>            
         </li>
         {% endfor %}
       </ul>
