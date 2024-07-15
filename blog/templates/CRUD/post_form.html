@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
 
-<h1>{% if form.instance.pk %}Edit Post{% else %}New Post{% endif %}</h1>
 <div class="container">
+    <h1>{% if form.instance.pk %}Edit Post{% else %}New Post{% endif %}</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}

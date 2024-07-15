@@ -5,11 +5,13 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import Category, SubCategory, Post, Comment
 from .forms import PostForm, CommentForm
+from django.db.models import Count
 
 # Create your views here.
 def home(request):
     all_post = Post.objects.all().order_by('-created_at')
-    return render(request, 'home.html', {'all_post': all_post})
+    featured_posts = Post.objects.annotate(num_comments=Count('comments')).order_by('-num_comments')[:3]
+    return render(request, 'home.html', {'all_post': all_post, 'featured_posts': featured_posts})
 
 
 def post(request, post_id):

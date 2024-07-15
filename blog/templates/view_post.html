@@ -1,22 +1,35 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<br><br>
-<div class="container">
-    <h1>{{post.title}}</h1>
-    <br>
-    <p>Create by {{post.author.first_name}} {{post.author.last_name}}. {{post.created_at}}</p> <br>
-    <br>
-    <img src="{{post.cover.url}}" alt="" width="600" height="450">
-    <br>
-    <p>{{post.subtitle}}</p>
-    <br>
-    <br>
-    
-    {{post.content|safe}} <br>
-    <br>
-    <br>
 
+    
+
+<div id="main">
+
+    <!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2>{{post.title}}</h2>
+                <p>{{post.subtitle}}</p>
+            </div>
+            <div class="meta">
+                <time class="published" datetime="2015-11-01">{{post.created_at}}</time>
+                <a href="#" class="author"><span class="name">{{post.author.first_name}} {{post.author.last_name}}</span>
+                    <img src="{{post.author.profile.image.url}}">
+                </a>
+            </div>
+        </header>
+        <span class="image featured"><img src="{{post.cover.url}}" alt="{{post.cover.name}}" /></span>
+        <p>{{post.content|safe}}</p>
+        <footer>
+            <ul class="stats">
+                <li><a href="#">General</a></li>
+                <li><a href="#" class="icon solid fa-heart">28</a></li>
+                <li><a href="#" class="icon solid fa-comment">128</a></li>
+            </ul>
+        </footer>
+    </article>
     <h6>Leave a comment</h6>
     <form action="{% url 'add_comment' post.id %}" method="post">
         {% csrf_token %}
