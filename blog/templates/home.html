@@ -20,7 +20,7 @@
             </div>
         </header>
         <a href="{% url 'post' post.id %}" class="image featured"><img src="{{post.cover.url}}" alt="{{post.cover.name}}" /></a>
-        <p>{{post.content|safe}}</p>
+        <p>{{post.content|truncatewords_html:10|safe}}</p>
         <footer>
             <ul class="actions">
                 <li><a href="{% url 'post' post.id %}" class="button large">Continue Reading</a></li>
@@ -45,10 +45,9 @@
 <section id="sidebar">
     <!-- Intro -->
     <section id="intro">
-        <a href="#" class="logo"><img src="" alt="" /></a>
         <header>
             <h2>Blog de chile</h2>
-            <p>En esta pagina de inicio encontraras post recientes de las diferentes categorias.</p>
+            <p class="pt-3">En esta pagina de inicio encontraras post recientes de las diferentes categorias.</p>
         </header>
     </section>
 

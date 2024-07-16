@@ -3,25 +3,34 @@
 {% block content %}
 
 <div class="container">
-    <h3>My Post</h3>
-    <a href="{% url 'create_post' %}" class="btn btn-secondary">Create Post</a>
-    {% for post in my_posts %}
-    <div class="col gridblog">
-        <div class="card cardblog">
-            <div class="imgblog">
-                <img src="{{post.cover.url}}" class="w-100" alt="{{post.cover.name}}" >
+    <div class="d-flex justify-content-between">
+        <h3>My Post</h3>
+        <a href="{% url 'create_post' %}" class="btn btn-secondary">Create Post</a>
+    </div>
+    <div class="pt-3">
+        <div class="mini-posts row">
+            {% for post in my_posts %}
+            <div class="col-4">
+                <article class="mini-post">
+                    <header>
+                        <h3><a href="{% url 'post' post.id %}">{{post.title}}</a></h3>
+                        <time class="published" datetime="2015-10-20">{{post.created_at}}</time>
+                        <a href="{% url 'post' post.id %}" class="author">
+                            <img src="{{post.author.profile.image.url}}">
+                        </a>
+                        <div>
+                            <a href="{% url 'edit_post' post.id %}" class="btn btn-success">Edit</a>
+                            <a class="btn btn-danger" role="button" data-bs-toggle="modal" data-bs-target="#deletePost{{ post.id }}">delete</a>
+                        </div>
+                    </header>
+                    <a href="{% url 'post' post.id %}" class="image">
+                        <img src="{{post.cover.url}}" alt="{{post.cover.name}}" />
+                    </a>
+                </article>
             </div>
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2">{{post.title}}</h6>
-                <a href="{% url 'post' post.id %}" class="btn btn-primary">View</a>
-                <a href="{% url 'edit_post' post.id %}" class="btn btn-success">Edit</a>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePost{{ post.id }}">delete</button>
-                
-                {% include 'CRUD/delete_post.html' with post_id=post.id %}
-            </div>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
 </div>
 
 {% endblock %}

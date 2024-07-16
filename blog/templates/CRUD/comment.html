@@ -1,5 +1,5 @@
 <li>
-    <img src="{{profile}}" alt="" width="40" class="rounded-circle"> {{comment.author.username}}: {{comment.text}}
+    <img src="{{profile}}" alt="" width="35" class="rounded-circle"> {{comment.author.username}}: {{comment.text}}
     <br>
     <form action="{% url 'add_comment_reply' post.id comment.id %}" method="post">
         {% csrf_token %}
