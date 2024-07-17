@@ -13,5 +13,5 @@ urlpatterns = [
     path('my_post/<int:post_id>/delete/', views.delete_post, name='delete_post'),
     path('search/', views.search, name='search'),
     path('seccion/<str:name>/', views.seccion, name='seccion'),
-    path('category/<str:categoryName>/', views.category, name='category'),
+    path('category/<str:name>/', views.category, name='category'),
 ]

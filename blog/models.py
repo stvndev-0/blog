@@ -21,7 +21,7 @@ class Post(models.Model):
     subtitle = models.CharField(max_length=255)
     cover = models.ImageField(upload_to='covers/', default='default.jpg', null=True, blank=True)
     content = RichTextUploadingField()
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='posts')
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='posts')

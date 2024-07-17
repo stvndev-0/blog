@@ -9,9 +9,9 @@ from django.db.models import Count
 
 # Create your views here.
 def home(request):
-    all_post = Post.objects.all().order_by('-created_at')
-    featured_posts = Post.objects.annotate(num_comments=Count('comments')).order_by('-num_comments')[:3]
-    return render(request, 'home.html', {'all_post': all_post, 'featured_posts': featured_posts})
+    all_post = Post.objects.all()
+    all_featured_posts = Post.objects.annotate(num_comments=Count('comments')).order_by('-num_comments')[:3]
+    return render(request, 'home.html', {'all_post': all_post, 'all_featured_posts': all_featured_posts})
 
 
 def post(request, post_id):
@@ -109,10 +109,12 @@ def search(request):
 def seccion(request, name):
     category = get_object_or_404(Category, name=name)
     subCategories = category.contents.all()
-    return render(request, 'seccion.html', {'category': category, 'subCategories': subCategories})
+    featured_posts_category = Post.objects.filter(category=category).annotate(num_comments=Count('comments')).order_by('-num_comments')[:3]
+    return render(request, 'seccion.html', {'category': category, 'subCategories': subCategories, 'featured_posts': featured_posts_category})
 
 
-def category(request, categoryName):
-    subCategory = SubCategory.objects.get(name=categoryName)
+def category(request, name):
+    subCategory = get_object_or_404(SubCategory, name=name)
     post_category = subCategory.posts.all()
-    return render(request, 'category.html', {'subCategory': subCategory, 'post_category': post_category})
+    featured_posts_subCategory = Post.objects.filter(subcategory=subCategory).annotate(num_comments=Count('comments')).order_by('-num_comments')[:3]
+    return render(request, 'category.html', {'subCategory': subCategory, 'post_category': post_category,  'featured_posts': featured_posts_subCategory})

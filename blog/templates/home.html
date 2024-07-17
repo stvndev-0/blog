@@ -5,33 +5,7 @@
 <div id="main">
     <!-- Post -->
     {% for post in all_post %}
-    <article class="post">
-        <header>
-            <div class="title">
-                <h2><a href="{% url 'post' post.id %}">{{post.title}}</a></h2>
-                <p>{{post.subtitle}}</p>
-            </div>
-            <div class="meta">
-                <time class="published" datetime="2015-11-01">{{post.created_at}}</time>
-                <a href="{% url 'post' post.id %}" class="author">
-                    <span class="name">{{post.author.first_name}} {{post.author.last_name}}</span>
-                    <img src="{{post.author.profile.image.url}}">
-                </a>
-            </div>
-        </header>
-        <a href="{% url 'post' post.id %}" class="image featured"><img src="{{post.cover.url}}" alt="{{post.cover.name}}" /></a>
-        <p>{{post.content|truncatewords_html:10|safe}}</p>
-        <footer>
-            <ul class="actions">
-                <li><a href="{% url 'post' post.id %}" class="button large">Continue Reading</a></li>
-            </ul>
-            <ul class="stats">
-                <li><a href="#">General</a></li>
-                <li><a href="#" class="icon solid fa-heart">28</a></li>
-                <li><a href="#" class="icon solid fa-comment">128</a></li>
-            </ul>
-        </footer>
-    </article>
+    {% include 'post.html' %}
     {% endfor %}
     
     <!-- Pagination -->
@@ -55,20 +29,21 @@
     <section>
         <div class="mini-posts">
             <h6>Post Destacados</h6>
-            {% for featured_post in featured_posts %}
-            <article class="mini-post">
-                <header>
-                    <h3><a href="{% url 'post' featured_post.id %}">{{featured_post.title}}</a></h3>
-                    <time class="published" datetime="2015-10-20">{{featured_post.created_at}}</time>
-                    <a href="{% url 'post' featured_post.id %}" class="author">
-                        <img src="{{featured_post.author.profile.image.url}}">
+            {% for post in all_featured_posts %}
+                <article class="mini-post">
+                    <header>
+                        <h3><a href="{% url 'post' post.id %}">{{post.title}}</a></h3>
+                        <time class="published" datetime="2015-10-20">{{post.created_at}}</time>
+                        <a href="{% url 'post' post.id %}" class="author">
+                            <img src="{{post.author.profile.image.url}}">
+                        </a>
+                    </header>
+                    <a href="{% url 'post' post.id %}" class="image">
+                        <img src="{{post.cover.url}}" alt="{{post.cover.name}}" />
                     </a>
-                </header>
-                <a href="{% url 'post' featured_post.id %}" class="image">
-                    <img src="{{featured_post.cover.url}}" alt="{{featured_post.cover.name}}" />
-                </a>
-            </article>
+                </article>
             {% endfor %}
+        </div>
     </section>
 </section>
 

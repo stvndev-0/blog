@@ -14,7 +14,7 @@
                 <p>{{post.subtitle}}</p>
             </div>
             <div class="meta">
-                <time class="published" datetime="2015-11-01">{{post.created_at}}</time>
+                <time class="published" datetime="2015-11-01">{{post.created_at|date:"F j, Y"}}</time>
                 <a href="#" class="author"><span class="name">{{post.author.first_name}} {{post.author.last_name}}</span>
                     <img src="{{post.author.profile.image.url}}">
                 </a>

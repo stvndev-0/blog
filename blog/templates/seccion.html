@@ -4,44 +4,14 @@
 
 <div id="main">
     <div class="d-flex justify-content-center my-4">
-       {% for subcategory in subCategories %}
-        <div class="px-2">
-            <a href="{% url 'category' subcategory.name %}" class="btn btn-outline-dark">{{subcategory.name}}</a>
-        </div>
-        {% endfor %} 
+       
     </div>
     
     <!-- Post -->
     {% for subcategory in subCategories %}
-    {% for post in subcategory.posts.all %}
-    <article class="post">
-        <header>
-            <div class="title">
-                <h2><a href="{% url 'post' post.id %}">{{post.title}}</a></h2>
-                <p>{{post.subtitle}}</p>
-            </div>
-            <div class="meta">
-                <time class="published" datetime="2015-11-01">{{post.created_at}}</time>
-                <a href="#" class="author">
-                    <span class="name">{{post.author.first_name}} {{post.author.last_name}}</span>
-                    <img src="{{post.author.profile.image.url}}">
-                </a>
-            </div>
-        </header>
-        <a href="{% url 'post' post.id %}" class="image featured"><img src="{{post.cover.url}}" alt="{{post.cover.name}}" /></a>
-        <p>{{post.content|safe}}</p>
-        <footer>
-            <ul class="actions">
-                <li><a href="{% url 'post' post.id %}" class="button large">Continue Reading</a></li>
-            </ul>
-            <ul class="stats">
-                <li><a href="#">General</a></li>
-                <li><a href="#" class="icon solid fa-heart">28</a></li>
-                <li><a href="#" class="icon solid fa-comment">128</a></li>
-            </ul>
-        </footer>
-    </article>
-    {% endfor %}
+        {% for post in subcategory.posts.all %}
+            {% include 'post.html' %}
+        {% endfor %}
     {% endfor %}
     
     <!-- Pagination -->
@@ -63,16 +33,23 @@
 
     <!-- Posts List -->
     <section>
-        <ul class="posts">
-            <li>
-                <article>
+        <div class="mini-posts">
+            <h6>Post Destacados</h6>
+            {% for post in featured_posts %}   
+                <article class="mini-post">
                     <header>
-                        <h3><a href="single.html">Lorem ipsum fermentum ut nisl vitae</a></h3>
-                        <time class="published" datetime="2015-10-20">October 20, 2015</time>
+                        <h3><a href="{% url 'post' post.id %}">{{post.title}}</a></h3>
+                        <time class="published" datetime="2015-10-20">{{post.created_at}}</time>
+                        <a href="{% url 'post' post.id %}" class="author">
+                            <img src="{{post.author.profile.image.url}}">
+                        </a>
                     </header>
-                    <a href="single.html" class="image"><img src="" alt="" /></a>
+                    <a href="{% url 'post' post.id %}" class="image">
+                        <img src="{{post.cover.url}}" alt="{{post.cover.name}}" />
+                    </a>
                 </article>
-            </li>
+            {% endfor %}
+        </div>
     </section>
 </section>
 {% endblock %}
