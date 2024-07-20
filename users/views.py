@@ -51,11 +51,24 @@ def register_user(request):
     else:
         return render(request, 'register.html', {'form': form})
     
-@login_required
-def profile(request):
-    current_user = User.objects.get(id=request.user.id)
-    image_user = Profile.objects.get(user=request.user)
-    return render(request, 'profile.html', {'user': current_user, 'image': image_user})
+
+def profile(request, user_id=None):
+    if user_id:
+        current_user = get_object_or_404(User, id=user_id)
+    else:
+        # Si no esta loggeado e intenta acceder al url '/profile/' se le redireccionara al 
+        # la pagina de login
+        if not request.user.is_authenticated:
+            return redirect('login')
+        current_user = request.user
+    
+    image_user = current_user.profile
+
+    posts = current_user.posts.all()
+    # se utiliza el operador de igualdad para compara los dos objetos 'User'.
+    # Si los dos son el mismo objeto (es decir, el mismo usuario en la bdd), la expresion sera 'True', de lo contrario si son usuarios diferentes, devolvera 'False'.
+    is_own_profile = current_user == request.user
+    return render(request, 'profile.html', {'user': current_user, 'image': image_user, 'posts': posts, 'is_own_profile': is_own_profile})
 
 # Faltan validaciones
 @login_required

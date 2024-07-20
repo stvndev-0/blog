@@ -1,9 +1,24 @@
+body{
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+
 .dropdown-toggle::after {
     display: none !important;
   }
 
 .dropdown-toggle {
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+a{
+	color: black !important;
+	text-decoration: none !important;
+}
+
+.color-white{
+	color: white !important;
 }

@@ -1,14 +1,21 @@
-<li>
-    <img src="{{profile}}" alt="" width="35" class="rounded-circle"> {{comment.author.username}}: {{comment.text}}
-    <br>
-    <form action="{% url 'add_comment_reply' post.id comment.id %}" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn btn-primary">Comment</button>
-    </form>
-    <ul>
-        {% for reply in comment.replies.all %}
+{% load static %}
+<div class="media mb-3">
+    <img src="{{comment.author.profile.image.url}}" width="42" height="42" class="rounded-circle mr-3">
+    <div class="media-body">
+        <h6 class="mt-0">{{comment.author.username}}</h6>
+        <p>{{comment.text}}</p>
+        <form action="{% url 'add_comment_reply' post.id comment.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{form.text}}
+            </div>
+            <button type="submit" class="btn btn-primary boton">Comment</button>
+        </form>
+        
+        <ul class="list-unstyled ml-3">
+            {% for reply in comment.replies.all %}
             {% include 'CRUD/comment.html' with comment=reply %}
-        {% endfor %}
-    </ul>
-</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

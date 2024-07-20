@@ -2,10 +2,7 @@
 {% load static %}
 {% block content %}
 
-    
-
 <div id="main">
-
     <!-- Post -->
     <article class="post">
         <header>
@@ -15,7 +12,7 @@
             </div>
             <div class="meta">
                 <time class="published" datetime="2015-11-01">{{post.created_at|date:"F j, Y"}}</time>
-                <a href="#" class="author"><span class="name">{{post.author.first_name}} {{post.author.last_name}}</span>
+                <a href="{% url 'profile_user' post.id %}" class="author"><span class="name">{{post.author.first_name}} {{post.author.last_name}}</span>
                     <img src="{{post.author.profile.image.url}}">
                 </a>
             </div>
@@ -38,13 +35,12 @@
     </form>
 
     <br>
-    
-    <h6>Comments</h6>
-    <ul>
+    <div class="container mt-5">
+        <h6>Comments</h6>
         {% for comment in comments %}
             {% include 'CRUD/comment.html' %}
         {% endfor %}
-    </ul>
+    </div>
 </div>
 
 {% endblock %}    

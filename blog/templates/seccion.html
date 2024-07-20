@@ -4,7 +4,11 @@
 
 <div id="main">
     <div class="d-flex justify-content-center my-4">
-       
+        {% for subcategory in subCategories %}
+        <div class="px-2">
+            <a href="{% url 'category' subcategory.name %}" class="btn btn-outline-dark">{{subcategory.name}}</a>
+        </div>
+        {% endfor %}
     </div>
     
     <!-- Post -->

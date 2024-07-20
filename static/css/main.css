@@ -2735,11 +2735,6 @@ input, select, textarea {
 		}
 
 /* Post */
-a{
-	color: black !important;
-	text-decoration: none !important;
-}
-
 	.post {
 		padding: 3em 3em 1em 3em ;
 		background: #ffffff;

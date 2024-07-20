@@ -8,7 +8,7 @@
         {% endif %}
         <div>
             <h1 id="settings-header" class="fs-5 lh-sm mb-0">
-                <a href="{% url 'profile' %}" class="text-dark link-dark link-offset-1 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                <a href="{% url 'profile' %}">
                     {{user.first_name}} {{user.last_name}}
                     <span class="text-body-tertiary">({{user.username}})</span>
                 </a>

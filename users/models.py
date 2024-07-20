@@ -13,4 +13,6 @@ class Profile(models.Model):
         # Comprueba si la imagen a eliminar no sea la imagen por defecto
         if self.image.name != 'default.jpg':
             self.image.delete(save=False)
+            self.image = 'default.jpg'
+            self.save()
         super().delete(*args, **kwargs)

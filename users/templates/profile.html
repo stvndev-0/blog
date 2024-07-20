@@ -3,26 +3,48 @@
 {% block content %}
 
 <div class="container">
-  <div class="d-flex align-items-center mb-2">
-    {% if profile %}
-    <img class="rounded-circle me-3" src="{{profile}}" alt="" height="100" width="100">
-    {% else %}
-    <img class="rounded-circle me-3" src="{% static 'images/default.jpg' %}" alt="" height="100" width="100">
-    {% endif %}
-    
-    <div>
-        <h1 id="settings-header" class="fs-5 lh-sm mb-0">
-          {{user.first_name}} {{user.last_name}}
+  <div class="d-md-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex mb-2">
+      <img class="rounded-circle me-3" src="{{user.profile.image.url}}" alt="" height="100" width="100">
+      <div style="width: 1000px;">
+        <h1 id="settings-header" class="fs-5 lh-sm mb-0 pb-0">
+          <a href="">
+            {{user.first_name}} {{user.last_name}}
+            <span class="text-body-tertiary">({{user.username}})</span>
+          </a>
         </h1>
-        <div class="d-flex align-items-center flex-wrap">
-            <p class="mb-0 me-2">
-                bio
-            </p>
+        <div class="d-flex align-items-center flex-wrap pt-2">
+          <p class="">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus magnam veritatis distinctio, nihil, obcaecati similique consequatur pariatur officiis quibusdam, aperiam explicabo commodi harum animi sapiente necessitatibus? Distinctio porro minus error?</p>
         </div>
       </div>
+      {% if is_own_profile %}
+      <div>
+        <a href="{% url 'update_profile' %}" class="btn btn-primary color-white">Update Profile</a> 
+      </div>
+      {% endif %}
     </div>
-    <h1>Recetas</h1>
-    <a href="{% url 'update_profile' %}" class="btn btn-success">Update Profile</a> 
+  </div>
+  <h1>Recetas</h1>
+  <div class="pt-3">
+    <div class="mini-posts row">
+        {% for post in posts %}
+        <div class="col-4">
+            <article class="mini-post">
+                <header>
+                    <h3><a href="{% url 'post' post.id %}">{{post.title}}</a></h3>
+                    <time class="published" datetime="2015-10-20">{{post.created_at}}</time>
+                    <a href="{% url 'post' post.id %}" class="author">
+                        <img src="{{post.author.profile.image.url}}">
+                    </a>
+                </header>
+                <a href="{% url 'post' post.id %}" class="image">
+                    <img src="{{post.cover.url}}" alt="{{post.cover.name}}" />
+                </a>
+            </article>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
 </div>
 
 {% endblock %}
