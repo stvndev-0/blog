@@ -22,3 +22,43 @@ a{
 .color-white{
 	color: white !important;
 }
+
+.boton{
+  position: relative;
+  margin: 0;
+  white-space: nowrap;
+  min-width: 0;
+  text-transform: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  border: none;
+  cursor: pointer;
+  outline-width: 0;
+  box-sizing: border-box;
+  background: none;
+  text-decoration: none;
+  flex: 1;
+  flex-basis: 0.000000001px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.boton--size-s{
+  padding: 0 12px;
+  height: 32px;
+  font-size: 12px;
+  line-height: 32px;
+  border-radius: 16px;
+}
+
+.boton:hover{
+  background-color: rgb(206, 206, 206) !important;
+}
+
+.comment-img{
+  width: 24px;
+  height: 24px;
+}
