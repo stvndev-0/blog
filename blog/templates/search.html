@@ -2,22 +2,30 @@
 {% load static %}
 {% block content %}
 
-
-<h3>Post</h3>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1">
-    {% for post in searched %}
-    <div class="col mb-5">
-        <div class="card" style="width: 18rem;">
-            <img src="{{post.cover.url}}" class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">{{post.title}}</h5>
-                <p class="card-text">{{post.subtitle}}</p>
-                <a href="{% url  'post' post.id %}" class="btn btn-primary">View Post</a>
+<div class="container">
+    <div class="d-flex justify-content-between">
+        <h3>Restulado de tu busqueda: {{search}}</h3>
+    </div>
+    <div class="pt-3">
+        <div class="mini-posts row">
+            {% for post in searched %}
+            <div class="col-4">
+                <article class="mini-post">
+                    <header>
+                        <h3><a href="{% url 'post' post.id %}">{{post.title}}</a></h3>
+                        <time class="published" datetime="2015-10-20">{{post.created_at|date:"F j, Y"}}</time>
+                        <a href="{% url 'post' post.id %}" class="author" >
+                            <img src="{{post.author.profile.image.url}}"  height="42" width="42">
+                        </a>
+                    </header>
+                    <a href="{% url 'post' post.id %}" class="image card-img">
+                        <img src="{{post.cover.url}}" alt="{{post.cover.name}}"/>
+                    </a>
+                </article>
             </div>
+            {% endfor %}
         </div>
-        </div>
-    {% endfor %}
+    </div>
 </div>
-
 
 {% endblock %}

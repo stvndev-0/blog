@@ -13,7 +13,7 @@
             <div class="meta">
                 <time class="published" datetime="2015-11-01">{{post.created_at|date:"F j, Y"}}</time>
                 <a href="{% url 'profile_user' post.id %}" class="author"><span class="name">{{post.author.first_name}} {{post.author.last_name}}</span>
-                    <img src="{{post.author.profile.image.url}}">
+                    <img src="{{post.author.profile.image.url}}" height="42" width="42">
                 </a>
             </div>
         </header>
@@ -21,83 +21,148 @@
         <p>{{post.content|safe}}</p>
         <footer>
             <ul class="stats">
-                <li><a href="#">General</a></li>
                 <li><a href="#" class="icon solid fa-heart">28</a></li>
                 <li><a href="#" class="icon solid fa-comment">128</a></li>
             </ul>
         </footer>
     </article>
-    <h6>Leave a comment</h6>
-    <form action="{% url 'add_comment' post.id %}" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn btn-primary">Comment</button>
-    </form>
-
-    <br>
-    
-    <h6>Comments</h6>
-    <div class="d-block mb-3">
-        {% for comment in comments %}
-
-        <div>
-            <div class="d-flex position-relative flex-row">
-                <div>
-                    <a href="" class="d-inline-block border-0">
-                        <img src="{{comment.author.profile.image.url}}" height="42" class="rounded-circle me-3">
-                    </a>
+    <div class="d-block">
+        <div class="mb-2">
+            <div class="d-flex flex-column">
+                <div class="mb-3">
+                    <h6>Comments</h6>
                 </div>
-                <div class="d-flex flex-auto flex-column">
-                    <div class="d-flex align-items-baseline flex-row">
-                        <p class="h6">
-                            <a href="{% url 'profile_user' post.id %}" class="d-block me-1 border-0">
-                                <span>{{comment.author.username}}</span>
-                            </a>
-                        </p>
+                <div class="d-flex flex-row position-relative">
+                    <div class="me-3">
+                        {% if profile %}
+                            <img src="{{profile}}" class="rounded-circle" height="42" width="42" alt="">
+                        {% else %}
+                            <img src="{% static 'images/default.jpg' %}" class="rounded-circle" height="42" width="42" alt="">
+                        {% endif %}
                     </div>
-                    <div>
-                        <div class="lh-sm">
-                            <span class="fs-6">{{comment.text}}</span>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="d-flex align-items-center flex-row me-2">
-                            <div class="ms-2 ">
-                                <div class="d-flex boton--size-s">
-                                    <a class="btn boton rounded-pill" type="button">
-                                        <span>Responder</span>
-                                    </a>
+                    <div class="flex-grow-1">
+                        <form action="{% url 'add_comment' post.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="w-100">
+                                {{form.as_p}}
+                            </div>
+                            <div class="d-flex flex-row align-items-center justify-content-end">
+                                <div class="d-flex flex-row">
+                                    <div class="ms-2">
+                                        <button type="button" class="btn boton--size-s rounded-pill" aria-label="Close">
+                                            <span>
+                                                Cancelar
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="ms-2">
+                                        <button type="submit" class="btn boton btn-primary rounded-pill">
+                                            <span class="text-white">
+                                                Comment
+                                            </span>
+                                        </button>
+                                    </div>
                                 </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for comment in comments %}
+        <div class="d-block mb-3">
+            <div>
+                <div class="d-flex position-relative flex-row">
+                    <div>
+                        <a href="{% url 'profile_user' comment.author.id %}" class="d-inline-block border-0">
+                            <img src="{{comment.author.profile.image.url}}" height="42" width="42" class="rounded-circle me-3">
+                        </a>
+                    </div>
+                    <div class="d-flex flex-auto flex-column">
+                        <div class="d-flex align-items-baseline flex-row">
+                            <p class="h6">
+                                <a href="{% url 'profile_user' comment.author.id %}" class="d-block me-1 border-0">
+                                    <span>{{comment.author.username}}</span>
+                                </a>
+                            </p>
+                        </div>
+                        <div>
+                            <div class="lh-sm">
+                                <span class="fs-6">{{comment.text}}</span>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <div class="d-flex align-items-center flex-row me-2">
+                                <div class="d-flex ms-2">
+                                    <div class="boton boton--size-s rounded-pill">
+                                        <a class="border-0" type="button" data-bs-toggle="collapse"  data-bs-target="#replyForm{{ comment.id }}" aria-expanded="false" aria-controls="replyForm">
+                                            <span>Responder</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse" id="replyForm{{ comment.id }}">
+                            <div class="d-flex flex-row position-relative">
+                                <div class="me-3">
+                                    {% if profile %}
+                                        <img src="{{profile}}" class="rounded-circle" height="42" width="42" alt="">
+                                    {% else %}
+                                        <img src="{% static 'images/default.jpg' %}" class="rounded-circle" height="42" width="42" alt="">
+                                    {% endif %}
+                                </div>
+                                <form action="{% url 'add_comment_reply' post.id comment.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{form.as_p}}
+                                    <div class="d-flex flex-row align-items-center justify-content-end">
+                                        <div class="d-flex flex-row">
+                                            <div class="ms-2">
+                                                <button type="button" class="btn boton--size-s rounded-pill"  data-bs-toggle="collapse" data-bs-target="#replyForm{{ comment.id }}" aria-label="Close">
+                                                    <span>
+                                                        Cancelar
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="ms-2">
+                                                <button type="submit" class="btn boton btn-primary rounded-pill">
+                                                    <span class="text-white">
+                                                        Comment
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    
-        <div>
-            <div class="d-block ms-5">
-                <div class="d-block">
-                    <div class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <div class="d-flex align-items-center ms-2 mb-3">
-                            <a class="btn boton rounded-pill" type="button">
-                                <span class="navbar-toggler-icon">Respuestas</span>
-                            </a>
+            <div>
+                <div class="d-block ms-5">
+                    <div class="d-block">
+                        {% if comment.replies.exists %}
+                        <div class="mb-2">
+                            <div class="d-inline-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#responses{{ comment.id }}" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <div class="btn boton-res rounded-pill border-0">
+                                        <span><i class="fa-solid fa-arrow-down-long pe-1" style="font-size: .7em;"></i>respuestas</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <div class="d-flex flex-column">
-                            {% for reply in comment.replies.all %}
+                        <div class="collapse navbar-collapse" id="responses{{ comment.id }}">
+                            <div class="d-flex flex-column">
+                                {% for reply in comment.replies.all %}
                                 {% include 'CRUD/comment.html' with comment=reply %}
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
-    
 </div>
 
 {% endblock %}    

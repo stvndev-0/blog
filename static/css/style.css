@@ -14,51 +14,61 @@ body{
   appearance: none;
 }
 
-a{
-	color: black !important;
-	text-decoration: none !important;
-}
-
 .color-white{
 	color: white !important;
 }
 
 .boton{
-  position: relative;
-  margin: 0;
-  white-space: nowrap;
-  min-width: 0;
-  text-transform: none;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  border: none;
-  cursor: pointer;
-  outline-width: 0;
-  box-sizing: border-box;
-  background: none;
-  text-decoration: none;
-  flex: 1;
-  flex-basis: 0.000000001px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  padding: 0 12px !important;
+  height: 32px !important;
+  font-size: 12px !important;
+  line-height: 32px !important;
+  border-radius: 16px !important;
+  border: none !important;
+  box-shadow: none !important;
+  letter-spacing: normal !important;
 }
 
 .boton--size-s{
-  padding: 0 12px;
-  height: 32px;
-  font-size: 12px;
-  line-height: 32px;
-  border-radius: 16px;
+  padding: 0 12px !important;
+  height: 32px !important;
+  font-size: 12px !important;
+  line-height: 32px !important;
+  border-radius: 16px !important;
+  border: none !important;
+  box-shadow: none !important;
+  letter-spacing: normal !important;
 }
 
-.boton:hover{
+.boton--size-s:hover{
   background-color: rgb(206, 206, 206) !important;
+  color: black !important;
 }
 
-.comment-img{
-  width: 24px;
-  height: 24px;
+.boton-res span{
+  color: #065fd4
+}
+
+.boton-res:hover{
+  background-color: #e3f2fd !important;
+}
+
+span{
+  color: black;
+}
+
+.input-comment{
+  background: transparent !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+
+.card-img{
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.iconos{
+  border-bottom: none;
 }

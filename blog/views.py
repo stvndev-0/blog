@@ -103,7 +103,7 @@ def search(request):
             messages.error(request, 'The searched publication was not found.')
             return redirect('home')
         else:
-            return render(request, 'search.html', {'searched': searched}) 
+            return render(request, 'search.html', {'search': search, 'searched': searched}) 
 
 
 def seccion(request, name):

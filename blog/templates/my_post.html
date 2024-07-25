@@ -14,7 +14,7 @@
                 <article class="mini-post">
                     <header>
                         <h3><a href="{% url 'post' post.id %}">{{post.title}}</a></h3>
-                        <time class="published" datetime="2015-10-20">{{post.created_at}}</time>
+                        <time class="published" datetime="2015-10-20">{{post.created_at|date:"F j, Y"}}</time>
                         <a href="{% url 'post' post.id %}" class="author">
                             <img src="{{post.author.profile.image.url}}">
                         </a>
@@ -23,7 +23,7 @@
                             <a class="btn btn-danger color-white" role="button" data-bs-toggle="modal" data-bs-target="#deletePost{{ post.id }}">delete</a>
                         </div>
                     </header>
-                    <a href="{% url 'post' post.id %}" class="image">
+                    <a href="{% url 'post' post.id %}" class="image card-img">
                         <img src="{{post.cover.url}}" alt="{{post.cover.name}}" />
                     </a>
                 </article>

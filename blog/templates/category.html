@@ -33,12 +33,12 @@
                 <article class="mini-post">
                     <header>
                         <h3><a href="{% url 'post' post.id %}">{{post.title}}</a></h3>
-                        <time class="published" datetime="2015-10-20">{{post.created_at}}</time>
+                        <time class="published" datetime="2015-10-20">{{post.created_at|date:"F j, Y"}}</time>
                         <a href="{% url 'post' post.id %}" class="author">
-                            <img src="{{post.author.profile.image.url}}">
+                            <img src="{{post.author.profile.image.url}}" height="42" width="42">
                         </a>
                     </header>
-                    <a href="{% url 'post' post.id %}" class="image">
+                    <a href="{% url 'post' post.id %}" class="image card-img">
                         <img src="{{post.cover.url}}" alt="{{post.cover.name}}" />
                     </a>
                 </article>

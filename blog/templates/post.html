@@ -9,7 +9,7 @@
             <time class="published" datetime="2015-11-01">{{post.created_at|date:"F j, Y"}}</time>
             <a href="{% url 'profile_user' post.id %}" class="author">
                 <span class="name">{{post.author.first_name}} {{post.author.last_name}}</span>
-                <img src="{{post.author.profile.image.url}}">
+                <img src="{{post.author.profile.image.url}}" height="42" width="42">
             </a>
         </div>
     </header>
@@ -20,7 +20,6 @@
             <li><a href="{% url 'post' post.id %}" class="button large">Continue Reading</a></li>
         </ul>
         <ul class="stats">
-            <li><a href="#">General</a></li>
             <li><a href="#" class="icon solid fa-heart">28</a></li>
             <li><a href="#" class="icon solid fa-comment">128</a></li>
         </ul>
