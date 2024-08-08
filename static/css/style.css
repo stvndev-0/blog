@@ -53,6 +53,10 @@ body{
   background-color: #e3f2fd !important;
 }
 
+.btn:hover{
+  box-shadow: none !important;
+}
+
 span{
   color: black;
 }

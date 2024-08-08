@@ -1,24 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <center>
-            <div class="col-5">
-                <br>
-                <form action="{% url 'login' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <input type="text" class="form-control" name="username" placeholder="Enter your username">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" name="password" placeholder="Enter your password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-            </div>
-        </center>
-    </div>
+<div class="m-auto text-center">
+    <form action="{% url 'login' %}" method="POST" class="align-content-center">
+        <div class="text-center">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        </div>
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" class="form-control rounded-4" name="username" placeholder="Username">
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control rounded-4" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary text-white rounded-4" style="width: 50%; height: 40px;">Login</button>
+    </form>
+    
 </div>
 
 {% endblock %}

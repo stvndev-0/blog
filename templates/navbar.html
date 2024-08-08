@@ -27,11 +27,7 @@
   {% if request.user.is_authenticated %}
   <div class="dropdown px-3 border-start">
     <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-      {% if profile %}
-          <img src="{{ profile }}" width="42" height="42" class="rounded-circle">
-      {% else %}
-          <img src="{% static 'images/default.jpg' %}" width="42" height="42" class="rounded-circle">
-      {% endif %}
+      <img src="{{ user.profile.image.url }}" width="42" height="42" class="rounded-circle">
     </span>
     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end text-center me-2">
       <li class="d-flex"><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>

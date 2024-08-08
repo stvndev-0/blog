@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d*5tt81((k#ebtg9q=dl1h4(+wgg=s(c$37x!6=69y01$k_xd9'
+SECRET_KEY = '-d*5tt81((k#ebhw7aaw5456478934"&%$&$%"356ddawd64tg9q=dl1h4(+awdwgg=s(c$awd37x!aw6=69hy01$k_xd9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -59,7 +59,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # My context_processors
                 'blog.context_processors.all_category',
-                'users.context_processors.profile_img',
             ],
         },
     },
@@ -76,18 +75,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3',
     }
-    # "default": {
-    #     "ENGINE": "mssql",
-    #     "NAME": "blog",
-    #     "USER": "sa",
-    #     "PASSWORD": "root",
-    #     "HOST": "localhost",
-    #     # "PORT": "5432",
-    #     'OPTIONS': {
-    #         'driver': 'ODBC Driver 17 for SQL Server',
-    #         'Trusted_Connection': 'yes',
-    #     }
-    # }
 }
 
 

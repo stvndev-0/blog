@@ -16,7 +16,7 @@
                         <h3><a href="{% url 'post' post.id %}">{{post.title}}</a></h3>
                         <time class="published" datetime="2015-10-20">{{post.created_at|date:"F j, Y"}}</time>
                         <a href="{% url 'post' post.id %}" class="author">
-                            <img src="{{post.author.profile.image.url}}">
+                            <img src="{{post.author.profile.image.url}}" height="42" width="42">
                         </a>
                         <div>
                             <a href="{% url 'edit_post' post.id %}" class="btn btn-success color-white">Edit</a>

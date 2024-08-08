@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <center>
-            <div class="col-5">
-                <br>
-                <form action="{% url 'register' %}" method="POST">
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <button type="submit" class="btn btn-primary">Register</button>
-                </form>
-            </div>
-        </center>
-    </div>
+<div class="m-auto">
+    <form action="{% url 'register' %}" method="POST" class="align-content-center">
+        <div class="text-center">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        </div>
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary rounded-4 text-white" style="width: 50%; height: 40px;">Register</button>
+        </div>
+    </form>
 </div>
 
 {% endblock %}
