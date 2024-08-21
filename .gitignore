@@ -1,6 +1,7 @@
 __pycache__
 venv
-sqlserver
-Sin título
-staticfiles
-node_modules
+.sqlserver
+.Sin título
+.post
+.data_category
+.comment
