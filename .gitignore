@@ -3,3 +3,4 @@ venv/
 data_category.json
 post.text
 sqlserver.text
+.env

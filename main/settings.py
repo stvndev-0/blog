@@ -1,3 +1,4 @@
+from decouple import config, Csv
 from pathlib import Path
 import os
 
@@ -9,12 +10,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-d*5tt81((k#ebhw7aaw5456478934"&%$&$%"356ddawd64tg9q=dl1h4(+awdwgg=s(c$awd37x!aw6=69hy01$k_xd9'
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
