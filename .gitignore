@@ -1,6 +1,6 @@
 __pycache__/
 venv/
 data_category.json
-post.text
-sqlserver.text
+post.txt
+sqlserver.txt
 .env
